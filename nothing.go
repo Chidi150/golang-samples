@@ -5,3 +5,4 @@
 package samples
 
 // This file is a workaround for golang.org/issue/15093.
+//testing
