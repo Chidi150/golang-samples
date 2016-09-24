@@ -9,7 +9,7 @@ Some samples have accompanying guides on
 [cloud.google.com](https://cloud.google.com). See respective README files for
 details.
 
-## Contributing changes.
+## Contributing changes from me.
 
 Entirely new samples are not accepted. Bug fixes are welcome, either as pull
 requests or as GitHub issues.
