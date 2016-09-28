@@ -7,7 +7,7 @@ package shopplace
 import "testing"
 
 func TestCreatedByName(t *testing.T) {
-	b := &Book{
+	b := &Shop{
 		CreatedByID: "homer",
 		CreatedBy:   "Homer Simpson",
 	}
@@ -18,7 +18,7 @@ func TestCreatedByName(t *testing.T) {
 }
 
 func TestAnonymous(t *testing.T) {
-	b := &Book{
+	b := &Shop{
 		CreatedByID: "homer",
 		CreatedBy:   "Homer Simpson",
 	}

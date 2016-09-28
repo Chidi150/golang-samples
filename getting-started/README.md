@@ -6,7 +6,7 @@ Please refer to the guide for full instructions on how to run the samples.
 
 ## Checking out the code
 
-    $ go get -d github.com/GoogleCloudPlatform/golang-samples/getting-started
+    $ go get -d github.com/Chidi150/golang-samples/getting-started
 
 ## Install aedeploy
 
@@ -18,16 +18,16 @@ Please refer to the guide for full instructions on how to run the samples.
     $ go run helloworld.go
     $ aedeploy gcloud app deploy
 
-## Run and deploy "Bookshelf"
+## Run and deploy "Shopplace"
 
-    $ cd $GOPATH/src/github.com/GoogleCloudPlatform/golang-samples/getting-started/bookshelf/app
+    $ cd $GOPATH/src/github.com/GoogleCloudPlatform/golang-samples/getting-started/shopplace/app
     $ vim ../config.go
     $ go run *.go
     $ aedeploy gcloud app deploy
 
-## Run and deploy "Bookshelf pub/sub worker"
+## Run and deploy "Shopplace pub/sub worker"
 
-    $ cd $GOPATH/src/github.com/GoogleCloudPlatform/golang-samples/getting-started/bookshelf/pubsub_worker
+    $ cd $GOPATH/src/github.com/GoogleCloudPlatform/golang-samples/getting-started/shopplace/pubsub_worker
     $ vim ../config.go
     $ go run *.go
     $ aedeploy gcloud app deploy
