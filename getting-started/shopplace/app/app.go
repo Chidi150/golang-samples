@@ -45,7 +45,7 @@ func registerHandlers() {
 	// Use gorilla/mux for rich routing.
 	// See http://www.gorillatoolkit.org/pkg/mux
 	r := mux.NewRouter()
-
+    r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	r.Handle("/", http.RedirectHandler("/shops", http.StatusFound))
 
 	r.Methods("GET").Path("/shops").

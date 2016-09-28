@@ -10,6 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/main.css">
 </head>
 <body>
 <div class="navbar navbar-default">
@@ -17,35 +18,18 @@
     <div class="navbar-header">
       <div class="navbar-brand">Shopplace</div>
     </div>
-
-    <ul class="nav navbar-nav">
-      <li><a href="/shops">Shops</a></li>
-      {{if .AuthEnabled}}
-        <li><a href="/shops/mine">My Shops</a></li>
-      {{end}}
-    </ul>
-
-    <!-- [START auth] -->
-    {{if .AuthEnabled}}
-      {{if .Profile}}
-      <form method="post" action="{{.LogoutURL}}" class="navbar-form navbar-right">
-        <button class="btn btn-default">Log out</button>
-      </form>
-      <div class="navbar-text navbar-right">
-        {{if .Profile.Image.Url}}
-          <img class="img-circle" width="24" src="{{.Profile.Image.Url}}">
-        {{end}}
-        <span>{{.Profile.DisplayName}}</span>
-      </div>
-      {{else}}
-      <div class="navbar-text navbar-right">
-        <a href="{{.LoginURL}}">Log in</a>
-      </div>
-      {{end}}
-    {{end}}
-    <!-- [END auth] -->
   </div>
 </div>
+<section class="jumbotron">
+<div class="container">
+  <div class="row text-center">
+    <h2>Idumota Market</h2>
+    <h3>Your one stop market in Nija</h3>
+    <a class="btn btn-primary" href="#" role="button">See all</a>
+    </div>
+  </div>
+</section>
+<section class="container">
 <div class="container">
   {{template "body" .Data}}
 </div>

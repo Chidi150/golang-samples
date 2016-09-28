@@ -23,6 +23,7 @@ import (
 )
 
 var (
+	//DB is the database of shops
 	DB          ShopDatabase
 	OAuthConfig *oauth2.Config
 
@@ -71,7 +72,7 @@ func init() {
 	// More options can be set, see the google package docs for details:
 	// http://godoc.org/golang.org/x/oauth2/google
 	//
-	// DB, err = configureDatastoreDB("<your-project-id>")
+	DB, err = configureDatastoreDB("udumotalag")
 	// [END datastore]
 
 	if err != nil {
@@ -82,8 +83,8 @@ func init() {
 	// To configure Cloud Storage, uncomment the following lines and update the
 	// bucket name.
 	//
-	// StorageBucketName = "<your-storage-bucket>"
-	// StorageBucket, err = configureStorage(StorageBucketName)
+	StorageBucketName = "udumotalag"
+	StorageBucket, err = configureStorage(StorageBucketName)
 	// [END storage]
 
 	if err != nil {
