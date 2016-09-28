@@ -5,7 +5,6 @@
 package shopplace
 
 import (
-	"errors"
 	"log"
 	"os"
 
@@ -42,29 +41,6 @@ const PubsubTopicID = "fill-shop-details"
 
 func init() {
 	var err error
-
-	// To use the in-memory test database, uncomment the next line.
-	DB = newMemoryDB()
-
-	// [START cloudsql]
-	// To use MySQL, uncomment the following lines, and update the username,
-	// password and host.
-	//
-	// DB, err = newMySQLDB(MySQLConfig{
-	// 	Username: "",
-	// 	Password: "",
-	// 	Host:     "",
-	// 	Port:     3306,
-	// })
-	// [END cloudsql]
-
-	// [START mongo]
-	// To use Mongo, uncomment the next lines and update the address string and
-	// optionally, the credentials.
-	//
-	// var cred *mgo.Credential
-	// DB, err = newMongoDB("localhost", cred)
-	// [END mongo]
 
 	// [START datastore]
 	// To use Cloud Datastore, uncomment the following lines and update the
@@ -110,12 +86,6 @@ func init() {
 	SessionStore = cookieStore
 	// [END sessions]
 
-	// [START pubsub]
-	// To configure Pub/Sub, uncomment the following lines and update the project ID.
-	//
-	// PubsubClient, err = configurePubsub("<your-project-id>")
-	// [END pubsub]
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -137,30 +107,6 @@ func configureStorage(bucketID string) (*storage.BucketHandle, error) {
 		return nil, err
 	}
 	return client.Bucket(bucketID), nil
-}
-
-func configurePubsub(projectID string) (*pubsub.Client, error) {
-	if _, ok := DB.(*memoryDB); ok {
-		return nil, errors.New("Pub/Sub worker doesn't work with the in-memory DB " +
-			"(worker does not share its memory as the main app). Configure another " +
-			"database in shopplace/config.go first (e.g. MySQL, Cloud Datastore, etc)")
-	}
-
-	ctx := context.Background()
-	client, err := pubsub.NewClient(ctx, projectID)
-	if err != nil {
-		return nil, err
-	}
-
-	// Create the topic if it doesn't exist.
-	if exists, err := client.Topic(PubsubTopicID).Exists(ctx); err != nil {
-		return nil, err
-	} else if !exists {
-		if _, err := client.CreateTopic(ctx, PubsubTopicID); err != nil {
-			return nil, err
-		}
-	}
-	return client, nil
 }
 
 func configureOAuthClient(clientID, clientSecret string) *oauth2.Config {
