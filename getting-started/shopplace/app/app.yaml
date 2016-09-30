@@ -3,4 +3,4 @@ vm: true
 api_version: 1
 
 env_variables:
-  OAUTH2_CALLBACK: https://<your-project-id>.appspot.com/oauth2callback
+  OAUTH2_CALLBACK: https://udumotalag.appspot.com/oauth2callback

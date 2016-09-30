@@ -13,7 +13,7 @@ import (
 
 	"google.golang.org/api/plus/v1"
 
-	"github.com/GoogleCloudPlatform/golang-samples/getting-started/bookshelf"
+	"github.com/Chidi150/golang-samples/getting-started/shopplace"
 )
 
 // parseTemplate applies a given file to the body of the base template.
@@ -47,7 +47,7 @@ func (tmpl *appTemplate) Execute(w http.ResponseWriter, r *http.Request, data in
 		LogoutURL   string
 	}{
 		Data:        data,
-		AuthEnabled: bookshelf.OAuthConfig != nil,
+		AuthEnabled: shopplace.OAuthConfig != nil,
 		LoginURL:    "/login?redirect=" + r.URL.RequestURI(),
 		LogoutURL:   "/logout?redirect=" + r.URL.RequestURI(),
 	}

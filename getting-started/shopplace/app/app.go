@@ -31,6 +31,7 @@ import (
 
 var (
 	// See template.go
+	firstTmpl  = parseTemplate("first.html")
 	listTmpl   = parseTemplate("list.html")
 	editTmpl   = parseTemplate("edit.html")
 	detailTmpl = parseTemplate("detail.html")
@@ -45,9 +46,11 @@ func registerHandlers() {
 	// Use gorilla/mux for rich routing.
 	// See http://www.gorillatoolkit.org/pkg/mux
 	r := mux.NewRouter()
-    r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
-	r.Handle("/", http.RedirectHandler("/shops", http.StatusFound))
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
+	//r.Handle("/", http.RedirectHandler("/shops", http.StatusFound))
 
+	r.Methods("GET").Path("/").
+		Handler(appHandler(firstHandler))
 	r.Methods("GET").Path("/shops").
 		Handler(appHandler(listHandler))
 	r.Methods("GET").Path("/shops/mine").
@@ -90,6 +93,16 @@ func registerHandlers() {
 }
 
 // listHandler displays a list with summaries of shops in the database.
+func firstHandler(w http.ResponseWriter, r *http.Request) *appError {
+	shops, err := shopplace.DB.ListShops()
+	if err != nil {
+		return appErrorf(err, "could not list shops: %v", err)
+	}
+
+	return firstTmpl.Execute(w, r, shops)
+}
+
+// listHandler displays a list with summaries of shops in the database.
 func listHandler(w http.ResponseWriter, r *http.Request) *appError {
 	shops, err := shopplace.DB.ListShops()
 	if err != nil {
@@ -105,11 +118,13 @@ func listMineHandler(w http.ResponseWriter, r *http.Request) *appError {
 	user := profileFromSession(r)
 	if user == nil {
 		http.Redirect(w, r, "/login?redirect=/shops/mine", http.StatusFound)
+
 		return nil
 	}
 
 	shops, err := shopplace.DB.ListShopsCreatedBy(user.Id)
 	if err != nil {
+		fmt.Println("USER IS not NIL but: ", user.Id)
 		return appErrorf(err, "could not list shops: %v", err)
 	}
 

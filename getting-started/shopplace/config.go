@@ -73,7 +73,7 @@ func init() {
 	// You will also need to update OAUTH2_CALLBACK in app.yaml when pushing to
 	// production.
 	//
-	// OAuthConfig = configureOAuthClient("clientid", "clientsecret")
+	OAuthConfig = configureOAuthClient("166679583563-2m3714ancfvqf383kt9jml2ue1jh735o.apps.googleusercontent.com", "ZjGvubPhh42Oq7ZKGDqklbSR")
 	// [END auth]
 
 	// [START sessions]

@@ -107,6 +107,7 @@ func listMineHandler(w http.ResponseWriter, r *http.Request) *appError {
 	user := profileFromSession(r)
 	if user == nil {
 		http.Redirect(w, r, "/login?redirect=/books/mine", http.StatusFound)
+		fmt.Println("USER IS NIL")
 		return nil
 	}
 

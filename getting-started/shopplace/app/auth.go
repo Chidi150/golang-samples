@@ -13,16 +13,15 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 
+	"github.com/Chidi150/golang-samples/getting-started/shopplace"
 	"github.com/satori/go.uuid"
 	"google.golang.org/api/plus/v1"
-
-	"github.com/GoogleCloudPlatform/golang-samples/getting-started/bookshelf"
 )
 
 const (
 	defaultSessionID = "default"
 	// The following keys are used for the default session. For example:
-	//  session, _ := bookshelf.SessionStore.New(r, defaultSessionID)
+	//  session, _ := shopplace.SessionStore.New(r, defaultSessionID)
 	//  session.Values[oauthTokenSessionKey]
 	googleProfileSessionKey = "google_profile"
 	oauthTokenSessionKey    = "oauth_token"
@@ -42,7 +41,7 @@ func init() {
 func loginHandler(w http.ResponseWriter, r *http.Request) *appError {
 	sessionID := uuid.NewV4().String()
 
-	oauthFlowSession, err := bookshelf.SessionStore.New(r, sessionID)
+	oauthFlowSession, err := shopplace.SessionStore.New(r, sessionID)
 	if err != nil {
 		return appErrorf(err, "could not create oauth session: %v", err)
 	}
@@ -61,7 +60,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) *appError {
 	// Use the session ID for the "state" parameter.
 	// This protects against CSRF (cross-site request forgery).
 	// See https://godoc.org/golang.org/x/oauth2#Config.AuthCodeURL for more detail.
-	url := bookshelf.OAuthConfig.AuthCodeURL(sessionID, oauth2.ApprovalForce,
+	url := shopplace.OAuthConfig.AuthCodeURL(sessionID, oauth2.ApprovalForce,
 		oauth2.AccessTypeOnline)
 	http.Redirect(w, r, url, http.StatusFound)
 	return nil
@@ -90,7 +89,7 @@ func validateRedirectURL(path string) (string, error) {
 // oauthCallbackHandler completes the OAuth flow, retreives the user's profile
 // information and stores it in a session.
 func oauthCallbackHandler(w http.ResponseWriter, r *http.Request) *appError {
-	oauthFlowSession, err := bookshelf.SessionStore.Get(r, r.FormValue("state"))
+	oauthFlowSession, err := shopplace.SessionStore.Get(r, r.FormValue("state"))
 	if err != nil {
 		return appErrorf(err, "invalid state parameter. try logging in again.")
 	}
@@ -102,12 +101,12 @@ func oauthCallbackHandler(w http.ResponseWriter, r *http.Request) *appError {
 	}
 
 	code := r.FormValue("code")
-	tok, err := bookshelf.OAuthConfig.Exchange(context.Background(), code)
+	tok, err := shopplace.OAuthConfig.Exchange(context.Background(), code)
 	if err != nil {
 		return appErrorf(err, "could not get auth token: %v", err)
 	}
 
-	session, err := bookshelf.SessionStore.New(r, defaultSessionID)
+	session, err := shopplace.SessionStore.New(r, defaultSessionID)
 	if err != nil {
 		return appErrorf(err, "could not get default session: %v", err)
 	}
@@ -132,7 +131,7 @@ func oauthCallbackHandler(w http.ResponseWriter, r *http.Request) *appError {
 // fetchProfile retrieves the Google+ profile of the user associated with the
 // provided OAuth token.
 func fetchProfile(ctx context.Context, tok *oauth2.Token) (*plus.Person, error) {
-	client := oauth2.NewClient(ctx, bookshelf.OAuthConfig.TokenSource(ctx, tok))
+	client := oauth2.NewClient(ctx, shopplace.OAuthConfig.TokenSource(ctx, tok))
 	plusService, err := plus.New(client)
 	if err != nil {
 		return nil, err
@@ -142,7 +141,7 @@ func fetchProfile(ctx context.Context, tok *oauth2.Token) (*plus.Person, error) 
 
 // logoutHandler clears the default session.
 func logoutHandler(w http.ResponseWriter, r *http.Request) *appError {
-	session, err := bookshelf.SessionStore.New(r, defaultSessionID)
+	session, err := shopplace.SessionStore.New(r, defaultSessionID)
 	if err != nil {
 		return appErrorf(err, "could not get default session: %v", err)
 	}
@@ -161,7 +160,7 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) *appError {
 // profileFromSession retreives the Google+ profile from the default session.
 // Returns nil if the profile cannot be retreived (e.g. user is logged out).
 func profileFromSession(r *http.Request) *plus.Person {
-	session, err := bookshelf.SessionStore.Get(r, defaultSessionID)
+	session, err := shopplace.SessionStore.Get(r, defaultSessionID)
 	if err != nil {
 		return nil
 	}
