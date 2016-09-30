@@ -6,7 +6,7 @@
 indexes:
 
 # This index enables filtering by "CreatedByID" and sort by "Title".
-- kind: Book
+- kind: Shop
   properties:
   - name: CreatedByID
     direction: asc
