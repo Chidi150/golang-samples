@@ -6,23 +6,35 @@
 */}}
 <html>
 <head>
-<title>Shopplace - Go on Google Cloud Platform</title>
+<title>Idumota Market</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<link href='https://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 <header class="container">
  <div class="row">
-   <h1 class=col-sm-4>Idumota</h1>
-   <nav class="col-sm-8 text-right">
-      <p><a href="/">Home</a></p>
-      <p><a href="/shops">Shops</a></p>
+   <h1 class="col-sm-3">Idumota</h1>
+   
+   <nav  class="col-sm-3 text-left">
+      <p id="home"><a href="/">Home</a></p>
+      <p id="home"><a href="/shops">Shops</a></p>
       {{if .AuthEnabled}}
-        <p><a href="/shops/mine">My Shops</a></p>
+      {{if .Profile}}
+        <p id="home"><a href="/shops/mine">My Shops</a></p>
       {{end}}
-      <p>Sign up</p>
+      {{end}}
+    </nav>
+  
+          <form class="col-sm-3">
+            
+         <input type="text" name="search" placeholder="Search..">
+       </form>
+
+    <nav  class="col-sm-3 text-right">
         <!-- [START auth] -->
     {{if .AuthEnabled}}
       {{if .Profile}}
@@ -36,8 +48,9 @@
         <span>{{.Profile.DisplayName}}</span>
       </div>
       {{else}}
-      
-        <p><a href="{{.LoginURL}}">Log in</a></p>
+      <p id="log"><a  href="{{.LoginURL}}">Log in</a></p>
+       <p id="log"><a  href="{{.LoginURL}}">Sign up</a></p>
+        
       
       {{end}}
     {{end}}
@@ -46,10 +59,8 @@
   </div>
 </header>
 
-<section class="container">
-<div class="container">
+
   {{template "body" .Data}}
-</div>
-</section>
+
 </body>
 </html>
