@@ -28,7 +28,7 @@ $go get -u -d github.com/Chidi150/golang-samples/getting-started/shopplace
 
 Navigate to the sample directory:
 
-cd $GOPATH/src/github.com/Chidi150/golang-samples/getting-started/shopplace
+$cd $GOPATH/src/github.com/Chidi150/golang-samples/getting-started/shopplace
 
 Creating a Cloud Storage bucket
 
