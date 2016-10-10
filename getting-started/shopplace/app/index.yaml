@@ -12,3 +12,11 @@ indexes:
     direction: asc
   - name: Title
     direction: asc
+
+# This index enables filtering by "CategoryID" and sort by "Title".
+- kind: Shop
+  properties:
+  - name: Category
+    direction: asc
+  - name: Title
+    direction: asc

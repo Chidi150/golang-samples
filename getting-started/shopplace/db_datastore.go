@@ -137,3 +137,29 @@ func (db *datastoreDB) ListShopsCreatedBy(userID string) ([]*Shop, error) {
 
 	return shops, nil
 }
+
+// ListShopsCategory returns a list of shops, ordered by title, filtered by
+// the category of the shop entry.
+func (db *datastoreDB) ListShopsCategory(userID string) ([]*Shop, error) {
+	ctx := context.Background()
+	if userID == "" {
+		return db.ListShops()
+	}
+
+	shops := make([]*Shop, 0)
+	q := datastore.NewQuery("Shop").
+		Filter("Category =", userID).
+		Order("Title")
+
+	keys, err := db.client.GetAll(ctx, q, &shops)
+
+	if err != nil {
+		return nil, fmt.Errorf("datastoredb: could not list shops: %v", err)
+	}
+
+	for i, k := range keys {
+		shops[i].ID = k.ID()
+	}
+
+	return shops, nil
+}

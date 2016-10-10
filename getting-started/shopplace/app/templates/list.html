@@ -6,7 +6,7 @@
 <section class="container">
   <div class="row">
 {{range .}}
-      <figure class="col-sm-3">
+      <figure class="col-sm-3 list">
          <a href="/shops/{{.ID}}"><img src="{{if .ImageURL}}{{.ImageURL}}{{else}}https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.720032,-73.988354&fov=90&heading=235&pitch=10&key=%20AIzaSyAV3qAYIEuBGzPlmmi92dUmrp8g4noIm2s{{end}}"></a>
          <h4><a href="/shops/{{.ID}}">{{.Title}}</a></h4>
          <p>{{.Author}}</p>
@@ -21,4 +21,4 @@
   <i class="glyphicon glyphicon-plus"></i>
   <span>Add shop</span>
 </a>
-
+<div class="clearfix"></div>

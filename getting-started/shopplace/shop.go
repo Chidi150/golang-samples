@@ -14,6 +14,10 @@ type Shop struct {
 	Description   string
 	CreatedBy     string
 	CreatedByID   string
+	Category      string
+	Address       string
+	EmailAddress  string
+	Phone         string
 }
 
 // CreatedByDisplayName returns a string appropriate for displaying the name of
@@ -39,6 +43,10 @@ type ShopDatabase interface {
 	// ListShopsCreatedBy returns a list of shops, ordered by title, filtered by
 	// the user who created the shop entry.
 	ListShopsCreatedBy(userID string) ([]*Shop, error)
+
+	// ListShopsCategory returns a list of shops, ordered by title, filtered by
+	// the Category of the shop entry.
+	ListShopsCategory(userID string) ([]*Shop, error)
 
 	// GetShop retrieves a shop by its ID.
 	GetShop(id int64) (*Shop, error)

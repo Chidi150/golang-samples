@@ -8,6 +8,17 @@ h1, h2, a {
   text-transform: uppercase;
 }
 
+.clearfix {
+  clear: both;
+}
+
+.col-sm-3 {
+	position: relative;
+	min-height: 34px;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
 a:link    {color:white; background-color:transparent; text-decoration:none}
 a:visited {color:white; background-color:transparent; text-decoration:none}
 a:hover   {color:#ffa800; background-color:transparent; text-decoration:underline}
@@ -20,6 +31,7 @@ a.btn:hover {
 
 p {
   font-family: Helvetica, Arial, sans-serif; 
+  margin: 0px;
 }
 
 .mini-navbar{
@@ -29,7 +41,7 @@ p {
 	width: 100%;
   padding-right: 20px;
   padding-left: 20px;
-  margin-right: 0px;
+  margin-right: 150px;
   margin-left: 0px;
 }
 
@@ -44,15 +56,10 @@ header h1 {
   color: #ffa800;
 }
 
-header .row{
-  display: flex;
-  align-items: center;
-  
-}
-
 .col-sm-3 #home {
   padding: 10px 20px 0px 0px; 
   display: flex;
+  text-align: center;
   float: left;
   color: #1c1c1c;
 }
@@ -143,6 +150,11 @@ input[type=text]:focus {
   
 }
 
+.col-sm-3.list{
+  height: 220px
+}
+
+
 .col-sm-3 #cat {
   color: white;
   font-family:  Tahoma,'Segoe UI', Geneva, Verdana, sans-serif ;
@@ -168,11 +180,10 @@ input[type=text]:focus {
   margin:0;
 }
 
-
 section .row img {
-  margin: 0 0 30px;
+  margin: 5px 0 3px;
   width: 100%;
-  height: 150px;
+  max-height: 150px;
 }
 
 /*

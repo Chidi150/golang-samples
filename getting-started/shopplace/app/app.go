@@ -7,7 +7,6 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -17,7 +16,6 @@ import (
 	"path"
 	"strconv"
 
-	"cloud.google.com/go/pubsub"
 	"cloud.google.com/go/storage"
 
 	"golang.org/x/net/context"
@@ -53,6 +51,8 @@ func registerHandlers() {
 		Handler(appHandler(firstHandler))
 	r.Methods("GET").Path("/shops").
 		Handler(appHandler(listHandler))
+	r.Methods("GET").Path("/shops/category/{name:[a-z]+}").
+		Handler(appHandler(listCategoryHandler))
 	r.Methods("GET").Path("/shops/mine").
 		Handler(appHandler(listMineHandler))
 	r.Methods("GET").Path("/shops/{id:[0-9]+}").
@@ -94,18 +94,32 @@ func registerHandlers() {
 
 // listHandler displays a list with summaries of shops in the database.
 func firstHandler(w http.ResponseWriter, r *http.Request) *appError {
-	shops, err := shopplace.DB.ListShops()
-	if err != nil {
-		return appErrorf(err, "could not list shops: %v", err)
-	}
+	//	shops, err := shopplace.DB.ListShops()
+	//	if err != nil {
+	//		return appErrorf(err, "could not list shops: %v", err)
+	//	}
 
-	return firstTmpl.Execute(w, r, shops)
+	return firstTmpl.Execute(w, r, nil)
 }
 
 // listHandler displays a list with summaries of shops in the database.
 func listHandler(w http.ResponseWriter, r *http.Request) *appError {
 	shops, err := shopplace.DB.ListShops()
 	if err != nil {
+		return appErrorf(err, "could not list shops: %v", err)
+	}
+
+	return listTmpl.Execute(w, r, shops)
+}
+
+// listCategoryHandler displays a list of shops of a particular category
+func listCategoryHandler(w http.ResponseWriter, r *http.Request) *appError {
+	params := mux.Vars(r)
+	category := params["name"]
+
+	shops, err := shopplace.DB.ListShopsCategory(category)
+	if err != nil {
+
 		return appErrorf(err, "could not list shops: %v", err)
 	}
 
@@ -124,7 +138,7 @@ func listMineHandler(w http.ResponseWriter, r *http.Request) *appError {
 
 	shops, err := shopplace.DB.ListShopsCreatedBy(user.Id)
 	if err != nil {
-		fmt.Println("USER IS not NIL but: ", user.Id)
+
 		return appErrorf(err, "could not list shops: %v", err)
 	}
 
@@ -191,6 +205,10 @@ func shopFromForm(r *http.Request) (*shopplace.Shop, error) {
 		Description:   r.FormValue("description"),
 		CreatedBy:     r.FormValue("createdBy"),
 		CreatedByID:   r.FormValue("createdByID"),
+		Category:      r.FormValue("category"),
+		Address:       r.FormValue("address"),
+		EmailAddress:  r.FormValue("emailaddress"),
+		Phone:         r.FormValue("phone"),
 	}
 
 	// If the form didn't carry the user information for the creator, populate it
@@ -256,7 +274,6 @@ func createHandler(w http.ResponseWriter, r *http.Request) *appError {
 	if err != nil {
 		return appErrorf(err, "could not save shop: %v", err)
 	}
-	go publishUpdate(id)
 	http.Redirect(w, r, fmt.Sprintf("/shops/%d", id), http.StatusFound)
 	return nil
 }
@@ -278,7 +295,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) *appError {
 	if err != nil {
 		return appErrorf(err, "could not save shop: %v", err)
 	}
-	go publishUpdate(shop.ID)
+
 	http.Redirect(w, r, fmt.Sprintf("/shops/%d", shop.ID), http.StatusFound)
 	return nil
 }
@@ -295,24 +312,6 @@ func deleteHandler(w http.ResponseWriter, r *http.Request) *appError {
 	}
 	http.Redirect(w, r, "/shops", http.StatusFound)
 	return nil
-}
-
-// publishUpdate notifies Pub/Sub subscribers that the shop identified with
-// the given ID has been added/modified.
-func publishUpdate(shopID int64) {
-	if shopplace.PubsubClient == nil {
-		return
-	}
-
-	ctx := context.Background()
-
-	b, err := json.Marshal(shopID)
-	if err != nil {
-		return
-	}
-	topic := shopplace.PubsubClient.Topic(shopplace.PubsubTopicID)
-	_, err = topic.Publish(ctx, &pubsub.Message{Data: b})
-	log.Printf("Published update to Pub/Sub for Shop ID %d: %v", shopID, err)
 }
 
 // http://blog.golang.org/error-handling-and-go
