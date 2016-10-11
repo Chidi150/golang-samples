@@ -4,11 +4,11 @@ Running the Go Shopplace on Container Engine
 
 Create the cluster:
 
-$gcloud container clusters create shopplace --scopes "cloud-platform" --num-nodes 2
+$gcloud container clusters create shopplace --scopes "cloud-platform" --num-nodes 2 --zone us-central1-b --project udumotalag
 
 Get the credentials for the cluster:
 
-$gcloud container clusters get-credentials shopplace
+$gcloud container clusters get-credentials shopplace --zone us-central1-b --project udumotalag
 
 Verify that you have access to the cluster:
 
@@ -22,7 +22,7 @@ Cloning the sample application
 
 The sample application is available on GitHub at Chidi150/golang-samples.
 
-Clone the repository:
+Clone the repository: TTTTTTTTTTTTTTTTTTTTT:
 
 $go get -u -d github.com/Chidi150/golang-samples/getting-started/shopplace
 
