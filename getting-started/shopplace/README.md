@@ -126,6 +126,8 @@ the deployment is complete. If you run into issues with the deployment,
 you can delete it and start over:
 
 $kubectl delete deployments frontend
+or 
+$kubectl delete deployments --all
 
 Once the deployment is complete you can see the pods that the deployment 
 created:
