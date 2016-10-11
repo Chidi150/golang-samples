@@ -4,11 +4,11 @@ Running the Go Shopplace on Container Engine
 
 Create the cluster:
 
-$gcloud container clusters create shopplace --scopes "cloud-platform" --num-nodes 2 --zone us-central1-b --project udumotalag
+$gcloud container clusters create shopplace --scopes "cloud-platform" --num-nodes 2 --zone us-central1-b --project idumotalag
 
 Get the credentials for the cluster:
 
-$gcloud container clusters get-credentials shopplace --zone us-central1-b --project udumotalag
+$gcloud container clusters get-credentials shopplace --zone us-central1-b --project idumotalag
 
 Verify that you have access to the cluster:
 
@@ -34,10 +34,10 @@ Creating a Cloud Storage bucket
 
 The Shopplace application uses Google Cloud Storage to store image files.
 
-Enter these commands to create a Cloud Storage bucket. Replace udumotalag with your project ID:
+Enter these commands to create a Cloud Storage bucket. Replace idumotalag with your project ID:
 
-$gsutil mb gs://udumotalag
-$gsutil defacl set public-read gs://udumotalag
+$gsutil mb gs://idumotalag
+$gsutil defacl set public-read gs://idumotalag
 
 Note: You can choose any name for your Cloud Storage bucket. To keep the name easy to 
 remember, the preceding commands use your project ID as the bucket name. Bucket names 
@@ -83,24 +83,24 @@ getting-started/shopplace/gke_deployment/Dockerfile VIEW ON GITHUB
 Build the application's Docker image:
 
 $cd app/
-$aedeploy docker build -t gcr.io/udumotalag/shopplace .
+$aedeploy docker build -t gcr.io/idumotalag/shopplace .
 $cd ..
 
 Push the image to Google Container Registry so that your cluster can access the image:
 
-$gcloud docker push gcr.io/udumotalag/shopplace
+$gcloud docker push gcr.io/idumotalag/shopplace
 
 Containerizing the worker
 
 Containerize the backend worker using the same commands. Build the worker's Docker image:
 
 $cd pubsub_worker/
-$aedeploy docker build -t gcr.io/udumotalag/shopplace-worker .
+$aedeploy docker build -t gcr.io/idumotalag/shopplace-worker .
 $cd ../gke_deployment/
 
 Push the image to Google Container Registry so that your cluster can access the image:
 
-$gcloud docker push gcr.io/udumotalag/shopplace-worker
+$gcloud docker push gcr.io/idumotalag/shopplace-worker
 
 Deploying the Shopplace front end
 
@@ -112,7 +112,7 @@ associated pods.
 
 getting-started/shopplace/gke_deployment/shopplace-frontend.yaml VIEW ON GITHUB
 
-In shopplace-frontend.yaml, replace udumotalag with your project ID.
+In shopplace-frontend.yaml, replace idumotalag with your project ID.
 Use kubectl to deploy the resources to the cluster:
 
 $kubectl create -f shopplace-frontend.yaml
@@ -138,7 +138,7 @@ Deploying the Shopplace back end
 
 The Shopplace back end is deployed the same way as the front end.
 
-In shopplace-worker.yaml, replace udumotalag with your project ID.
+In shopplace-worker.yaml, replace idumotalag with your project ID.
 Use kubectl to deploy the resources to the cluster:
 
 $kubectl create -f shopplace-worker.yaml
