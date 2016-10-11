@@ -36,7 +36,7 @@ spec:
       containers:
       - name: shopplace-worker
         # TODO: Replace [YOUR_PROJECT_ID] with your project ID.
-        image: gcr.io/[YOUR_PROJECT_ID]/shopplace-worker:latest
+        image: gcr.io/udumotalag/shopplace-worker:latest
         # This setting makes nodes pull the docker image every time before
         # starting the pod. This is useful when debugging, but should be turned
         # off in production.
