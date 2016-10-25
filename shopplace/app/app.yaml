@@ -1,0 +1,6 @@
+runtime: go
+vm: true
+api_version: 1
+
+env_variables:
+  OAUTH2_CALLBACK: https://idumotalag.appspot.com/oauth2callback

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{{/*
+  Copyright 2015 Google Inc. All rights reserved.
+  Use of this source code is governed by the Apache 2.0
+  license that can be found in the LICENSE file.
+*/}}
+<html>
+<head>
+<title>Idumota Market</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<link href='https://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+  
+<header class="container">     
+ <div class="row">
+   <h1 class="col-sm-3">Idumota</h1>
+   
+   <nav  class="col-sm-3 text-left">
+      <p id="home"><a href="/">Home</a></p>
+      <p id="home"><a href="/shops">Shops</a></p>
+      {{if .AuthEnabled}} <!-- this means if authentication is enabled for the application-->
+      {{if .Profile}} <!-- and the user session is profiled for the user --> 
+        <p id="home"><a href="/shops/mine">My Shops</a></p>
+      {{end}}
+       {{end}}
+    </nav>
+  
+    <div class="col-sm-3">
+          <form >
+         <input type="text" name="search" placeholder="Search..">
+       </form>
+       </div>
+    <div class="col-sm-3 text-right">
+        <!-- [START auth] -->
+    {{if .AuthEnabled}}
+      {{if .Profile}}
+      <form method="post" action="{{.LogoutURL}}" class="navbar-form navbar-right">
+        <button class="btn btn-default">Log out</button>
+      </form>
+      <div class="navbar-text navbar-right">
+        {{if .Profile.Image.Url}}
+          <img class="img-circle" width="24" src="{{.Profile.Image.Url}}">
+        {{end}}
+        <span>{{.Profile.DisplayName}}</span>
+      </div>
+      {{else}}
+      <p id="log"><a  href="{{.LoginURL}}">Log in</a></p>
+      <p id="log"><a  href="{{.LoginURL}}">Sign up</a></p>
+      {{end}}
+    {{end}}
+
+    <!-- [END auth] -->
+    </div>
+  </div>
+</header>
+
+
+  {{template "body" .Data}}
+
+    <section class="supporting footer">
+      <div class="container">
+        <div class="row">
+           <div class="col-sm-3">
+             <h2>Fashion</h2>
+              <ul>
+               <li><a id="cat" href="/shops/category/Cosmetics">Cosmetics</a></li>
+               <li><a id="cat" href="/shops/category/Clothing">Clothing</a></li>
+               <li><a id="cat" href="/shops/category/Shoes">Shoes</a></li>
+               <li><a id="cat" href="/shops/category/Bags">Bags</a></li>
+               <li><a id="cat" href="/shops/category/Jewelleries">Jewelleries</a></li>
+               </ul>
+              </div>
+           
+              <div class="col-sm-3">
+    		       <h2>Home & Kitchen</h2>   
+		 	         <ul>
+                 <li><a id="cat" href="/shops/category/Household Utensils">Household Utensils</a></li>
+                 <li><a id="cat" href="/shops/category/Beverages">Beverage</a></li>
+                 <li><a id="cat" href="/shops/category/Provision">Provision</a></li>
+                 <li><a id="cat" href="/shops/category/Cereals">Cereals</a></li>
+                 <li><a id="cat" href="/shops/category/Wine">Wine</a></li>
+               </ul>      
+		          </div>
+           
+           <div class="col-sm-3">
+			       <h2>Baby, Kids & Toys</h2>
+			        <ul>
+                <li><a id="cat" href="/shops/category/Baby and Child Care">Baby & Child Care</a></li>
+                 <li><a id="cat" href="/shops/category/Baby and Toddler Toys">Baby and Toddler Toys</a></li>
+                 <li><a id="cat" href="/shops/category/Baby Accessories">Baby Accessories</a></li>
+                 <li><a id="cat" href="/shops/category/Baby Blankets">Baby Blankets</a></li>
+                 <li><a id="cat" href="/shops/category/Baby Clothing">Baby Clothing</a></li>
+                 <li><a id="cat" href="/shops/category/Children's Books">Children's Books</a></li>
+                 <li><a id="cat" href="/shops/category/Kids' Furniture">Kids' Furniture</a></li>
+           </ul>
+			        
+		      </div>
+		    
+          <div class="col-sm-3"><iframe height="200" frameborder="0"        style="border:0"
+             src="https://www.google.com/maps/embed/v1/place?q=idumota+lagos+nigeria&key= AIzaSyCYkDMZPL121hHkVs9AqgDFLN-BN4k2gcc" allowfullscreen></iframe> </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="supporting footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3">
+            <h2>Weddings</h2>
+             <ul>
+            <li><a id="cat" href="/shops/category/Wedding Bags and Purses">Wedding Bags & Purses</a></li>
+            <li><a id="cat" href="/shops/category/Wedding clothing">Wedding clothing</a></li>
+            <li><a id="cat" href="/shops/category/Belts and Braces">Belts & Braces</a></li>
+            <li><a id="cat" href="/shops/category/Gloves and Mittens">Gloves & Mittens</a></li>
+            <li><a id="cat" href="/shops/category/Hair Accessories">Hair Accessories</a></li>
+        </ul>
+          </div>
+              <div class="col-sm-3">
+			       <h2>Entertainment</h2>   
+			         <ul>
+            <li><a id="cat" href="/shops/category/Books Films and Music">Books, Films & Music</a></li>
+            <li><a id="cat" href="/shops/category/Electronics and Accessories">Electronics & Accessories</a></li>
+            <li><a id="cat" href="/shops/category/provision">Provision</a></li>
+            <li><a id="cat" href="/shops/category/cereals">Cereals</a></li>
+            <li><a id="cat" href="/shops/category/wine">Wine</a></li>
+        </ul>
+			          
+		      </div>
+          
+          <div class="col-sm-3">
+			      <h2>Vintage</h2>
+			      <ul>
+                <li><a id="cat" href="/shops/category/Hats and Caps">Hats and Caps</a></li>
+                 <li><a id="cat" href="/shops/category/Baseball and Trucker Caps">Baseball and Trucker Caps</a></li>
+                 <li><a id="cat" href="/shops/category/Fedoras">Fedoras</a></li>
+                 <li><a id="cat" href="/shops/category/Evening and Formal Gloves">Evening and Formal Gloves</a></li>
+                 <li><a id="cat" href="/shops/category/Keychains and Lanyards">Keychains and Lanyards</a></li>
+            </ul>
+          </div>
+         
+          <div class="col-sm-3">
+			       <h2>Craft Supplies & Tools</h2>
+			        <ul>
+            <li><a  id="cat" href="/shops/category/Fibre and Textile Art">Fibre & Textile Art Supplies</a></li>
+            <li><a  id="cat" href="/shops/category/Foods Craft Supplies">Foods Craft Supplies</a></li>
+            <li><a  id="cat" href="/shops/category/Jewellery and Beading">Jewellery and Beading</a></li>
+            <li><a  id="cat" href="/shops/category/Sewing and Needlecraft">Sewing and Needlecraft</a></li>
+            <li><a  id="cat" href="/shops/category/General Supplies">General Supplies</a></li>
+        </ul>
+       </div>
+      </div>
+  </section>
+
+</body>
+</html>

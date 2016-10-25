@@ -1,0 +1,11 @@
+<h1> It is ( {{.Dshop.Title}} ) seen? </h1>
+
+
+<h5>Shop Owner: {{if .Dshop.Author}}{{.Dshop.Author}}{{else}}unknown{{end}}</h5>
+    <p>{{.Dshop.Description}}</p>
+    <small>Added by {{.Dshop.CreatedByDisplayName}}</small>
+{{if eq .Dshop.CreatedByID .UserID }}
+    <h1> Another1 = {{.Dshop.CreatedByID }} </h1>
+<h1> Another2 = {{.UserID }} </h1>
+{{end}}
+
